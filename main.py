@@ -12,8 +12,25 @@ def shortest_shortest_path(graph, source):
       a dict where each key is a vertex and the value is a tuple of
       (shortest path weight, shortest path number of edges). See test case for example.
     """
-    ### TODO
-    pass
+    def weight_helper(visited, frontier):
+        if len(frontier) == 0:
+            return visited
+        else:
+            distance, node, counter = heappop(frontier)
+            if node in visited:
+                return weight_helper(visited, frontier)
+            else:
+                visited[node] = (distance, counter)
+                counter += 1
+                for neighbor, weight in graph[node]:
+                    heappush(frontier, (distance + weight, neighbor, counter))                
+                return weight_helper(visited, frontier)
+    
+        
+    frontier = []
+    heappush(frontier, (0, source, 0))
+    visited = dict() 
+    return weight_helper(visited, frontier)
     
 def test_shortest_shortest_path():
 
@@ -40,8 +57,19 @@ def bfs_path(graph, source):
       a dict where each key is a vertex and the value is the parent of 
       that vertex in the shortest path tree.
     """
-    ###TODO
-    pass
+    def bfs_serial_helper(visited, frontier):
+        if len(frontier) == 0:
+            return visited
+        else:
+            node = frontier.popleft()
+            visited.add(node)
+            frontier.extend(filter(lambda n: n not in visited, graph[node]))
+            return bfs_serial_helper(visited, frontier)
+
+    frontier = deque()
+    frontier.append(source)
+    visited = set()
+    return bfs_serial_helper(visited, frontier)
 
 def get_sample_graph():
      return {'s': {'a', 'b'},

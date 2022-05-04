@@ -12,10 +12,6 @@ Suppose we are given a a directed, **weighted** graph $G=(V,E)$ with only positi
 
 Complete the function `shortest_shortest_path` and test with the example graph given in `test_shortest_shortest_path`. Note that the `shortest_shortest_path` function returns both the weight and the number of edges of each shortest path.
 
-
-
-  
-
 ## 2. Computing paths
 
 a) We have seen how to run breadth-first search while keeping track of the distance of each node to the source. Let's now keep track of the actual shortest path from the source to each node. First, observe that the order in which BFS visits nodes implies a tree over the graph:
@@ -31,4 +27,3 @@ Here, the dark edges indicate all the shortest paths discovered by BFS. To keep 
 Complete the `bfs_path` function to return this parent `dict` and test it with `test_bfs_path`. Your algorithm should not increase the asymptotic work/span of BFS.
 
 b) Next, complete `get_path`, which takes in the parent `dict` and a node, and returns a string indicating the path from the source node to the destination node. Test with `test_get_path`.
-
