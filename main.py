@@ -57,19 +57,21 @@ def bfs_path(graph, source):
       a dict where each key is a vertex and the value is the parent of 
       that vertex in the shortest path tree.
     """
-    def bfs_serial_helper(visited, frontier):
-        if len(frontier) == 0:
-            return visited
-        else:
-            node = frontier.popleft()
-            visited.add(node)
-            frontier.extend(filter(lambda n: n not in visited, graph[node]))
-            return bfs_serial_helper(visited, frontier)
-
-    frontier = deque()
-    frontier.append(source)
-    visited = set()
-    return bfs_serial_helper(visited, frontier)
+    queue = []
+    visited = {}
+    for i in graph.keys():
+        visited[i] = False
+    visited[source] = True
+    res = {}
+    queue.append(source)
+    while queue:
+        i = queue.pop(0)
+        for u in graph[i]:
+            if visited[u] == False:
+                queue.append(u)
+                visited[u] = True
+                res[u] = i
+    return res
 
 def get_sample_graph():
      return {'s': {'a', 'b'},
@@ -93,8 +95,11 @@ def get_path(parents, destination):
       The shortest path from the source node to this destination node 
       (excluding the destination node itself). See test_get_path for an example.
     """
-    ###TODO
-    pass
+    res = ''
+    while destination in parents:
+        res += parents[destination]
+        destination = parents[destination]
+    return res[::-1]
 
 def test_get_path():
     graph = get_sample_graph()
